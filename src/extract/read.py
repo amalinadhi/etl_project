@@ -1,6 +1,7 @@
 """Load data source"""
 
 import joblib
+import pandas as pd
 
 from src.credential import google_api
 from src.util import logging
@@ -22,7 +23,7 @@ def from_pickle(filepath: str) -> list:
     """
     try:
         data = joblib.load(filepath)
-        logging.print_debug(f"Successfuly load the data from {filepath}!")
+        logging.print_debug(f"Successfuly extract data from {filepath}!")
 
     except FileNotFoundError as error:
         raise RuntimeError("File is not found in path.")
@@ -54,5 +55,30 @@ def from_spreadsheet(sheet_id: str, sheet_name: str) -> list:
     )
     
     data = sheet.get_all_values()
+    logging.print_debug(f"Successfuly extract data from {sheet_id}!")
+
+    return data
+
+def from_csv(filepath: str) -> pd.DataFrame:
+    """
+    Load spreadsheet values based on sheet_id & sheet_name
+
+    Parameters
+    ----------
+    filepath : str
+        The .csv location
+
+    has_header : bool, default=True
+        Whether the csv has header or not
+
+    Return
+    ------
+    data : pd.DataFrame
+        the data
+    """
+    # Open the file
+    data = pd.read_csv(filepath)
+    logging.print_debug(f"Successfuly extract data from {filepath}!")
+
     return data
 

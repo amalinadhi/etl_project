@@ -10,10 +10,10 @@ from sqlalchemy import MetaData
 from sqlalchemy.sql import func
 
 
-metadata = MetaData()
+METADATA = MetaData()
 
 IRIS = Table(
-    'iris', metadata,
+    'iris', METADATA,
     Column('id', BigInteger, primary_key=True, autoincrement=True),
     Column('sepal_length', Float),
     Column('sepal_width', Float),
@@ -23,7 +23,7 @@ IRIS = Table(
 )
 
 UPDATE_LOG = Table(
-    'update_log', metadata,
+    'update_log', METADATA,
     Column('id', BigInteger, primary_key=True, autoincrement=True),
     Column('updated_at', DateTime(timezone=True), server_default=func.now()),
     Column('updated_on', VARCHAR(80)),
